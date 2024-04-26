@@ -1,11 +1,5 @@
-﻿using Amazon.Auth.AccessControlPolicy.ActionIdentifiers;
-using Consumo.Domain.Interfaces.Services;
+﻿using Consumo.Domain.Interfaces.Services;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ArquivoServiceProjeto
 {
@@ -17,8 +11,12 @@ namespace ArquivoServiceProjeto
         {
             _fileService = fileService;
         }
+
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            const string filePath = "caminho/do/seu/arquivo.txt";
+            var arquivo = ReadFileToStream(filePath);
+
             Console.WriteLine("Escolha uma das opções abaixo: ");
             Console.WriteLine("1 - Listar Arquivos na Pasta Raiz");
             Console.WriteLine("2 - Listar Arquivos na Pasta Processados");
@@ -44,10 +42,8 @@ namespace ArquivoServiceProjeto
                     _fileService.BuscaArquivoRaiz(nome);
                     break;
                 case "5":
-                    var caminho = "C:\\Eclipse\\Worker";
                     Console.WriteLine("Digite o nome do arquivo:");
                     var nomeArquivo = Console.ReadLine();
-                    var arquivo = null;
                     _fileService.EscreveArquivoRaiz(nomeArquivo, arquivo);
                     break;
                 //case "6":
@@ -60,6 +56,20 @@ namespace ArquivoServiceProjeto
             }
 
             return Task.CompletedTask;
+        }
+
+        private static Stream ReadFileToStream(string filePath)
+        {
+            if (!File.Exists(filePath))
+            {
+                throw new FileNotFoundException("O arquivo não foi encontrado.", filePath);
+            }
+
+            using var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            var memoryStream = new MemoryStream();
+            fileStream.CopyTo(memoryStream);
+            memoryStream.Position = 0;
+            return memoryStream;
         }
     }
 }
