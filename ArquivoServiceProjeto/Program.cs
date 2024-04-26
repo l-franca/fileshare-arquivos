@@ -13,8 +13,10 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        var _fileShareConfig = "";
-        var fileShareConfig = JsonConvert.DeserializeObject<FileShareConfig>(_fileShareConfig);
+        var fileConfigurations = new GlobalConfigurations();
+        var credenciaisFileShare = fileConfigurations.CredenciaisFileShare;
+        var fileShareConfig = JsonConvert.DeserializeObject<FileShareConfig>(credenciaisFileShare);
+        
         builder.Services.AddSingleton(fileShareConfig);
         builder.Services.AddSingleton<IFileService, FileService>();
         builder.Services.AddFileShare();
