@@ -1,4 +1,5 @@
-﻿using Consumo.Domain.Interfaces.Services;
+﻿using ArquivoServiceProjeto;
+using Consumo.Domain.Interfaces.Services;
 using Consumo.Service.Services;
 using FileShare.Extensions;
 using FileShare.Models;
@@ -17,6 +18,7 @@ public class Program
         builder.Services.AddSingleton(fileShareConfig);
         builder.Services.AddSingleton<IFileService, FileService>();
         builder.Services.AddFileShare();
+        builder.Services.AddHostedService<Processar>();
 
         var app = builder.Build();
         app.Run();

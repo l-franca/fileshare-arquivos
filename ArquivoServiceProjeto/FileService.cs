@@ -36,7 +36,11 @@ public class FileService : IFileService
 
         return arquivo;
     }
-
+    public List<string> ListaArquivosPastaRaiz()
+    {
+        var caminhoPasta = $"{caminhoArquivo}";
+        return _fileShare.ListFiles(caminhoPasta);
+    }
     public List<string> ListaArquivosPastaProcessados()
     {
         var caminhoPasta = $"{caminhoArquivo}\\processados";

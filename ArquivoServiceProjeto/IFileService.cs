@@ -4,6 +4,7 @@ public interface IFileService
 {
     string BuscaNomeArquivo();
     byte[] BuscaArquivoRaiz(string nomeArquivo);
+    List<string> ListaArquivosPastaRaiz();
     List<string> ListaArquivosPastaProcessados();
     List<string> ListaArquivosPastaSaida();
     bool EscreveArquivoRaiz(string nomeArquivo, Stream arquivo);
