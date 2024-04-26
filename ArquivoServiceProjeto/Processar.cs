@@ -26,17 +26,20 @@ namespace ArquivoServiceProjeto
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            var opcaoSelecionada = OpcoesMenu.Encerrar;
+            MostrarOpcoes();
+            string input = Console.ReadLine();
+            int.TryParse(input, out int opcaoSelecionada);
+            OpcoesMenu opcaoMenu = (OpcoesMenu)opcaoSelecionada;
 
-            while (opcaoSelecionada != OpcoesMenu.Encerrar)
+            while (opcaoMenu != OpcoesMenu.Encerrar)
             {
                 MostrarOpcoes();
 
                 if (Enum.TryParse(Console.ReadLine(), out OpcoesMenu opcao))
                 {
-                    opcaoSelecionada = opcao;
+                    opcaoMenu = opcao;
 
-                    switch (opcaoSelecionada)
+                    switch (opcaoMenu)
                     {
                         case OpcoesMenu.ListarArquivosPastaRaiz:
                             ListArquivosPasta(_fileService.ListaArquivosPastaRaiz);

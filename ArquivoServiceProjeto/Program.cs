@@ -18,7 +18,7 @@ public class Program
         var fileShareConfig = JsonConvert.DeserializeObject<FileShareConfig>(credenciaisFileShare);
         
         builder.Services.AddSingleton(fileShareConfig);
-        builder.Services.AddSingleton<IFileService, FileService>();
+        builder.Services.AddScoped<IFileService, FileService>();
         builder.Services.AddFileShare();
         builder.Services.AddHostedService<Processar>();
 
