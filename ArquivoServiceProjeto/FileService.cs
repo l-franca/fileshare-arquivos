@@ -8,6 +8,7 @@ namespace Consumo.Service.Services;
 public class FileService : IFileService
 {
     private readonly IFileShareService _fileShare;
+    private readonly string caminhoArquivo = "";
 
     public FileService(IFileShareService fileShare)
     {
@@ -16,7 +17,6 @@ public class FileService : IFileService
 
     public string BuscaNomeArquivo()
     {
-        string caminhoArquivo = "";
         var arquivos = _fileShare.ListFiles(caminhoArquivo);
 
         if (arquivos == null)
@@ -24,51 +24,43 @@ public class FileService : IFileService
             throw new Exception($"Não foram encontrados arquivos no caminho: {caminhoArquivo}");
         }
 
-        var prefixoArquivo = "";
+        var prefixoArquivo = "P1X.CMS.BMAX.SE.AZ08T";
         var nomeArquivo = arquivos.FirstOrDefault(o => o.Contains(prefixoArquivo));
 
         return nomeArquivo;
     }
 
-    public byte[] BuscaArquivo(string nomeArquivo)
+    public byte[] BuscaArquivoRaiz(string nomeArquivo)
     {
-        var caminhoArquivo = "";
         var arquivo = _fileShare.ReadFile($"{caminhoArquivo}\\{nomeArquivo}");
 
         return arquivo;
     }
 
-    public bool EscreveArquivoEntradaProcessados(string nomeArquivo, MemoryStream arquivo)
+    public List<string> ListaArquivosPastaProcessados()
     {
-        var caminhoArquivo = "";
-        return EscreveArquivo(caminhoArquivo, nomeArquivo, arquivo);
-    }
-
-    public void EscreveArquivoSaida(string nomeArquivo, MemoryStream arquivo)
-    {
-        var caminhoArquivo = "";
-        EscreveArquivo(caminhoArquivo, nomeArquivo, arquivo);
+        var caminhoPasta = $"{caminhoArquivo}\\processados";
+        return _fileShare.ListFiles(caminhoPasta);
     }
 
     public List<string> ListaArquivosPastaSaida()
     {
-        var caminhoPasta = "";
+        var caminhoPasta = $"{caminhoArquivo}\\saida";
         return _fileShare.ListFiles(caminhoPasta);
     }
 
-    public void DeletarArquivo(string nomeArquivo)
-    {
-        var caminhoArquivo = "";
-        var caminhoNomeArquivo = $"{caminhoArquivo}\\{nomeArquivo}";
-
-        _fileShare.DeleteFile(caminhoNomeArquivo);
-    }
-
-    private bool EscreveArquivo(string caminhoArquivo, string nomeArquivo, Stream arquivo)
+    public bool EscreveArquivoRaiz(string nomeArquivo, Stream arquivo)
     {
         var caminhoNomeArquivo = $"{caminhoArquivo}\\{nomeArquivo}";
 
         var arquivoEscrito = _fileShare.WriterFile(caminhoNomeArquivo, arquivo);
         return arquivoEscrito;
+    }
+
+    public void DeletarArquivoRaiz(string nomeArquivo)
+    {
+        var caminhoNomeArquivo = $"{caminhoArquivo}\\{nomeArquivo}";
+
+        _fileShare.DeleteFile(caminhoNomeArquivo);
     }
 }

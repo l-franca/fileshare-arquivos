@@ -3,9 +3,9 @@
 public interface IFileService
 {
     string BuscaNomeArquivo();
-    byte[] BuscaArquivo(string nomeArquivo);
-    bool EscreveArquivoEntradaProcessados(string nomeArquivo, MemoryStream arquivo);
-    void EscreveArquivoSaida(string nomeArquivo, MemoryStream arquivo);
+    byte[] BuscaArquivoRaiz(string nomeArquivo);
+    List<string> ListaArquivosPastaProcessados();
     List<string> ListaArquivosPastaSaida();
-    void DeletarArquivo(string nomeArquivo);
+    bool EscreveArquivoRaiz(string nomeArquivo, Stream arquivo);
+    void DeletarArquivoRaiz(string nomeArquivo);
 }
