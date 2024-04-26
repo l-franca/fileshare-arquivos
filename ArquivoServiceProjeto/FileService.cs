@@ -30,9 +30,15 @@ public class FileService : IFileService
         return nomeArquivo;
     }
 
-    public byte[] BuscaArquivoRaiz(string nomeArquivo)
+    public byte[] BuscaArquivoSaida(string nomeArquivo)
     {
-        var arquivo = _fileShare.ReadFile($"{caminhoArquivo}\\{nomeArquivo}");
+        var arquivo = _fileShare.ReadFile($"{caminhoArquivo}\\saida\\{nomeArquivo}");
+
+        return arquivo;
+    }
+    public byte[] BuscaArquivoProcessados(string nomeArquivo)
+    {
+        var arquivo = _fileShare.ReadFile($"{caminhoArquivo}\\processados\\{nomeArquivo}");
 
         return arquivo;
     }

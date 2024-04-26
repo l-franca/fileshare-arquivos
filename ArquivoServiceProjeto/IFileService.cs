@@ -3,7 +3,8 @@
 public interface IFileService
 {
     string BuscaNomeArquivo();
-    byte[] BuscaArquivoRaiz(string nomeArquivo);
+    byte[] BuscaArquivoSaida(string nomeArquivo);
+    byte[] BuscaArquivoProcessados(string nomeArquivo);
     List<string> ListaArquivosPastaRaiz();
     List<string> ListaArquivosPastaProcessados();
     List<string> ListaArquivosPastaSaida();
