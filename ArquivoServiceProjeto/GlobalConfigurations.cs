@@ -10,7 +10,6 @@ public class GlobalConfigurations
     public string RaizCaminhoFileShare { get; } = "";
     public string CredenciaisFileShare { get; } = "";
     public Stream StreamArquivo { get; private set; }
-    public string NomeArquivo { get; private set; }
     public string NomeArquivoComExtensao { get; private set; }
     public string? CaminhoArquivo { get; private set; }
 
@@ -22,9 +21,11 @@ public class GlobalConfigurations
     private void InicializarConfiguracoes()
     {
         CaminhoArquivo = Path.GetDirectoryName(_caminhoEArquivoEntrada);
-        NomeArquivo = Path.GetFileNameWithoutExtension(_caminhoEArquivoEntrada);
+        
+        var nomeArquivo = Path.GetFileNameWithoutExtension(_caminhoEArquivoEntrada);
         var extensaoArquivo = Path.GetExtension(_caminhoEArquivoEntrada);
-        NomeArquivoComExtensao = Path.Combine(NomeArquivo, extensaoArquivo);
+        
+        NomeArquivoComExtensao = Path.Combine(nomeArquivo, extensaoArquivo);
 
         StreamArquivo = FileUtils.LerArquivoParaStream(_caminhoEArquivoEntrada);
     }
